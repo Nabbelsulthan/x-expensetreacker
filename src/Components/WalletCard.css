@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   gap: 18px;
+  margin-left: 50px;
 }
 
 .wallet-card h2 {
@@ -15,7 +16,6 @@
   font-weight: 500;
 }
 
-/* Amount text */
 .wallet .amount {
   color: #7cff3f;
 }
@@ -24,19 +24,18 @@
   color: #ffc107;
 }
 
-/* Button */
-.wallet-btn {
-  border-radius: 25px !important;
-  padding: 8px 22px !important;
-  text-transform: none !important;
-  font-weight: 600 !important;
+.wallet .wallet-btn,
+.expense .wallet-btn {
+  border-radius: 25px;
+  padding: 8px 22px;
+  text-transform: none;
+  font-weight: 600;
 }
 
-/* Button colors */
 .wallet .wallet-btn {
-  background-color: #9ddb3f !important;
+  background-color: #9ddb3f;
 }
 
 .expense .wallet-btn {
-  background-color: #ff6b6b !important;
+  background-color: #ff6b6b;
 }
