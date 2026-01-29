@@ -1,20 +1,19 @@
 import { useState } from "react";
-
 import "../styles/Modal.css";
 
 export default function BalanceModal({ onAdd, onClose }) {
-
   const [amount, setAmount] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     if (!amount) return;
     onAdd(Number(amount));
     setAmount("");
   };
 
   return (
-    <div className="modal-overlay">
+    <div className="modal-backdrop">
 
       <form className="modal" onSubmit={handleSubmit}>
 
@@ -28,11 +27,11 @@ export default function BalanceModal({ onAdd, onClose }) {
         />
 
         <div className="modal-actions">
- 
+
           <button type="submit">Add Balance</button>
 
           <button type="button" onClick={onClose}>Cancel</button>
-          
+
         </div>
       </form>
     </div>
