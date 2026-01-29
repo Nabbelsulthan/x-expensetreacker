@@ -54,3 +54,10 @@
   background: #ff4d4d;
   color: white;
 }
+
+.no-transactions {
+  text-align: center;
+  padding: 30px;
+  color: #999;
+  font-weight: 600;
+}

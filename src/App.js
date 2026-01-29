@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Snackbar, Alert } from "@mui/material";
 
 import WalletCard from "./Components/WalletCard.jsx";
 import TransactionList from "./Components/TransactionList.jsx";
@@ -6,6 +7,7 @@ import ExpenseChart from "./Components/ExpenseChart.jsx";
 import TopExpenses from "./Components/TopExpenses.jsx";
 import ExpenseModal from "./Components/ExpenseModal.jsx";
 import BalanceModal from "./Components/BalanceModal.jsx";
+
 import "./styles/App.css";
 
 const DEFAULT_BALANCE = 5000;
@@ -16,26 +18,34 @@ export default function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [editingExpense, setEditingExpense] = useState(null);
 
+  /* Snackbar state */
+  const [snackOpen, setSnackOpen] = useState(false);
+
+  /* Load from localStorage */
   useEffect(() => {
     const e = JSON.parse(localStorage.getItem("expenses"));
     const b = Number(localStorage.getItem("walletBalance"));
-    if (e) setExpenses(e);
+
+    if (Array.isArray(e)) setExpenses(e);
     if (!isNaN(b)) setWalletBalance(b);
   }, []);
 
+  /* Persist to localStorage */
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
     localStorage.setItem("walletBalance", walletBalance);
   }, [expenses, walletBalance]);
 
+  /* Add balance */
   const addBalance = (amt) => {
-    setWalletBalance((b) => b + amt);
+    setWalletBalance((prev) => prev + amt);
     setActiveModal(null);
   };
 
+  /* Add / Edit expense */
   const saveExpense = (exp) => {
     if (!editingExpense && exp.amount > walletBalance) {
-      alert("Insufficient balance");
+      setSnackOpen(true);
       return;
     }
 
@@ -43,25 +53,30 @@ export default function App() {
       setExpenses((prev) =>
         prev.map((e) => (e.id === exp.id ? exp : e))
       );
-      setWalletBalance((b) => b + editingExpense.amount - exp.amount);
+      setWalletBalance(
+        (prev) => prev + editingExpense.amount - exp.amount
+      );
     } else {
       setExpenses((prev) => [...prev, exp]);
-      setWalletBalance((b) => b - exp.amount);
+      setWalletBalance((prev) => prev - exp.amount);
     }
 
     setEditingExpense(null);
     setActiveModal(null);
   };
 
+  /* Delete expense */
   const deleteExpense = (exp) => {
     setExpenses((prev) => prev.filter((e) => e.id !== exp.id));
-    setWalletBalance((b) => b + exp.amount);
+    setWalletBalance((prev) => prev + exp.amount);
   };
 
   return (
     <div className="app">
+      {/* ONLY ONE h1 */}
       <h1>Expense Tracker</h1>
 
+      {/* ===== TOP SECTION ===== */}
       <div className="dashboard-top">
         <WalletCard
           type="wallet"
@@ -74,14 +89,16 @@ export default function App() {
         <WalletCard
           type="expense"
           title="Expenses"
-          amount={expenses.reduce((s, e) => s + e.amount, 0)}
+          amount={expenses.reduce((sum, e) => sum + e.amount, 0)}
           buttonText="+ Add Expense"
           onClick={() => setActiveModal("EXPENSE")}
         />
 
+        {/* Chart ALWAYS visible */}
         <ExpenseChart expenses={expenses} />
       </div>
 
+      {/* ===== BOTTOM SECTION ===== */}
       <div className="dashboard-bottom">
         <div className="left-section">
           <h2 className="section-title">Recent Transactions</h2>
@@ -101,8 +118,12 @@ export default function App() {
         </div>
       </div>
 
+      {/* ===== MODALS ===== */}
       {activeModal === "BALANCE" && (
-        <BalanceModal onAdd={addBalance} onClose={() => setActiveModal(null)} />
+        <BalanceModal
+          onAdd={addBalance}
+          onClose={() => setActiveModal(null)}
+        />
       )}
 
       {(activeModal === "EXPENSE" || activeModal === "EDIT") && (
@@ -115,6 +136,22 @@ export default function App() {
           }}
         />
       )}
+
+      {/* ===== SNACKBAR ERROR ===== */}
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          onClose={() => setSnackOpen(false)}
+        >
+          Insufficient wallet balance
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

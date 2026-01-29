@@ -1,37 +1,75 @@
-import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
 
 const COLORS = {
-  Entertainment: "#ff9800",
-  Food: "#8a2be2",
-  Travel: "#ffe600",
+  Food: "#8E24AA",
+  Entertainment: "#FF9800",
+  Travel: "#FFEB3B",
+};
+
+const renderLabelInside = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  percent,
+}) => {
+  const RADIAN = Math.PI / 180;
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="white"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize={14}
+      fontWeight={700}
+    >
+      {`${Math.round(percent * 100)}%`}
+    </text>
+  );
 };
 
 export default function ExpenseChart({ expenses }) {
-  const data = ["Entertainment", "Food", "Travel"].map((cat) => ({
+  const categories = ["Food", "Entertainment", "Travel"];
+
+  const data = categories.map((cat) => ({
     name: cat,
     value: expenses
       .filter((e) => e.category === cat)
-      .reduce((s, e) => s + e.amount, 0),
+      .reduce((sum, e) => sum + e.amount, 0),
   }));
 
   return (
-    <ResponsiveContainer width={300} height={260}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          outerRadius={100}
-          label={({ percent }) =>
-            percent > 0 ? `${Math.round(percent * 100)}%` : ""
-          }
-          labelLine={false}
-        >
-          {data.map((entry, index) => (
-            <Cell key={index} fill={COLORS[entry.name]} />
-          ))}
-        </Pie>
-        <Legend verticalAlign="bottom" />
-      </PieChart>
-    </ResponsiveContainer>
+    <div className="chart-container">
+      <ResponsiveContainer width={260} height={260}>
+        <PieChart>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            outerRadius={90}
+            dataKey="value"
+            labelLine={false}
+            label={renderLabelInside}
+          >
+            {data.map((entry) => (
+              <Cell key={entry.name} fill={COLORS[entry.name]} />
+            ))}
+          </Pie>
+          <Legend verticalAlign="bottom" />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
