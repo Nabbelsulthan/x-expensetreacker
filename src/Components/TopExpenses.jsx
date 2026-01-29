@@ -1,6 +1,12 @@
 import "../styles/TopExpenses.css";
 
+
+
+
+
 export default function TopExpenses({ expenses }) {
+
+
   const totals = ["Entertainment", "Food", "Travel"].map((cat) => ({
     name: cat,
     value: expenses
@@ -14,10 +20,13 @@ export default function TopExpenses({ expenses }) {
     <div className="top-expenses-card">
       {totals.map((t) => (
         <div key={t.name}>
+
           <span>{t.name}</span>
+
           <div className="bar">
             <div
               className="fill"
+              
               style={{ width: `${(t.value / max) * 100}%` }}
             />
           </div>
