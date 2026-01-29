@@ -23,12 +23,18 @@ export default function App() {
 
   /* Load from localStorage */
   useEffect(() => {
-    const e = JSON.parse(localStorage.getItem("expenses"));
-    const b = Number(localStorage.getItem("walletBalance"));
+    const storedExpenses = localStorage.getItem("expenses");
+    const storedBalance = localStorage.getItem("walletBalance");
 
-    if (Array.isArray(e)) setExpenses(e);
-    if (!isNaN(b)) setWalletBalance(b);
+    if (storedExpenses) {
+      setExpenses(JSON.parse(storedExpenses));
+    }
+
+    if (storedBalance !== null) {
+      setWalletBalance(Number(storedBalance));
+    }
   }, []);
+
 
   /* Persist to localStorage */
   useEffect(() => {

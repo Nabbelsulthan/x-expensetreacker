@@ -2,8 +2,6 @@ import "../styles/WalletCard.css";
 
 
 
-
-
 export default function WalletCard({ type, title, amount, buttonText, onClick }) {
   return (
     <div className={`wallet-card ${type}`}>
@@ -15,7 +13,7 @@ export default function WalletCard({ type, title, amount, buttonText, onClick })
       <button type="button" onClick={onClick}>
         {buttonText}
       </button>
-      
+
     </div>
   );
 }
