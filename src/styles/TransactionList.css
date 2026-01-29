@@ -1,0 +1,56 @@
+.transactions-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.transaction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-row:last-child {
+  border-bottom: none;
+}
+
+.transaction-row strong {
+  display: block;
+}
+
+.date {
+  font-size: 13px;
+  color: #888;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions span {
+  color: #ffa000;
+  font-weight: 600;
+}
+
+.actions button {
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.actions button:first-of-type {
+  background: #f5c04d;
+  color: white;
+}
+
+.actions button:last-of-type {
+  background: #ff4d4d;
+  color: white;
+}

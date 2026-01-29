@@ -1,0 +1,54 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #f2f2f2;
+  width: 460px;
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #f4c04e;
+  color: white;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #dedede;
+}

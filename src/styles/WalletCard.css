@@ -1,0 +1,48 @@
+.wallet-card {
+  width: 360px;
+  height: 180px;
+  background: #b3b3b3;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.wallet-card h2 {
+  color: white;
+  font-weight: 500;
+}
+
+.wallet-card span {
+  font-weight: 700;
+}
+
+.wallet-card button {
+  border: none;
+  padding: 10px 26px;
+  border-radius: 22px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* wallet */
+.wallet span {
+  color: #7cff3f;
+}
+
+.wallet button {
+  background: #9ddb3f;
+  color: white;
+}
+
+/* expense */
+.expense span {
+  color: #ffc107;
+}
+
+.expense button {
+  background: #ff6b6b;
+  color: white;
+}
